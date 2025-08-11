@@ -20,6 +20,11 @@ namespace Nutmeg
 		/// </summary>
 		[SerializeField] private List<string> _scenes;
 
+		/// <summary>
+		/// 非同期処理ハンドル
+		/// </summary>
+		private HandleQueue _handle = null;
+
 		private void Awake()
 		{
 			// シングルトン化
@@ -44,5 +49,10 @@ namespace Nutmeg
 				}
 			}
 		}
+
+		/// <summary>
+		/// 未使用のアセットを開放する
+		/// </summary>
+		public void RefreshAssets() => Resources.UnloadUnusedAssets();
 	}
 }

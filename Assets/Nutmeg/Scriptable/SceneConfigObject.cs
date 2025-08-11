@@ -13,14 +13,10 @@ namespace Nutmeg
 			public List<string> SceneNames;
 		}
 
-		/// <summary>
-		/// 実行中永続的に残るシーン一覧
-		/// </summary>
-		[field: SerializeField] public List<string> Permanents;
+		[field: SerializeField, Tooltip("実行中、永続的に残るシーン")]
+		public List<string> Permanents;
 
-		/// <summary>
-		/// シーンの組み合わせ一覧
-		/// </summary>
-		[field: SerializeField] public List<SceneBundle> SceneBundles;
+		[field: SerializeField, Tooltip("まとめてロードしたいシーンの組み合わせ")]
+		public List<SceneBundle> SceneBundles;
 	}
 }

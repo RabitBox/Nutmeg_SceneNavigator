@@ -15,6 +15,14 @@ MonoBehaviour:
   Permanents:
   - AppCore
   SceneBundles:
-  - Name: Sample
+  - Name: Main
     SceneNames:
-    - SampleScene
+    - MainA
+    - SubA
+    - SubB
+  - Name: Sub
+    SceneNames:
+    - MainB
+    - SubC
+    - SubE
+    - SubD
