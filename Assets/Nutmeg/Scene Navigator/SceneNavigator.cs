@@ -37,17 +37,40 @@ namespace Nutmeg
 		/// <summary>
 		/// 読み込み済みシーン一覧を更新
 		/// </summary>
-		private void RefreshLoadedScenes()
+		public void RefreshLoadedScenes()
 		{
 			_scenes.Clear();
 			for (int i = 0; i < SceneManager.sceneCount; i++)
 			{
 				var scene = SceneManager.GetSceneAt(i);
-				if (this.gameObject.scene.name != scene.name)
+				if (IsPermanent(scene.name) == false)
 				{
 					_scenes.Add(scene.name);
 				}
 			}
+		}
+
+		/// <summary>
+		/// 常駐シーンかを調べる
+		/// </summary>
+		/// <param name="sceneName"></param>
+		/// <returns></returns>
+		private bool IsPermanent(string sceneName)
+		{
+			if (this.gameObject.scene.name == sceneName)
+			{
+				return true;
+			}
+
+			foreach(var item in _config.Permanents)
+			{
+				if (item == sceneName)
+				{
+					return true;
+				}
+			}
+
+			return false;
 		}
 
 		/// <summary>
