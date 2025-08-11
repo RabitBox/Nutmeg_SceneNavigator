@@ -53,6 +53,15 @@ namespace Nutmeg
 		/// <summary>
 		/// 未使用のアセットを開放する
 		/// </summary>
-		public void RefreshAssets() => Resources.UnloadUnusedAssets();
+		public async void RefreshAssetsAsync()
+		{
+			if (_handle is not null) return; // 実行中
+
+			_handle = new HandleQueue();
+			_handle.Enqueue(new RefreshAssetsAsyncHandle());
+
+			await _handle?.RunAll();
+			_handle = null;
+		}
 	}
 }
