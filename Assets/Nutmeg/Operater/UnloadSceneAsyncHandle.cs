@@ -3,6 +3,9 @@ using UnityEngine.SceneManagement;
 
 namespace Nutmeg
 {
+	/// <summary>
+	/// シーンの非同期アンロード
+	/// </summary>
 	public class UnloadSceneAsyncHandle : IHandle
 	{
 		string _name;
