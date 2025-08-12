@@ -16,16 +16,24 @@ namespace Nutmeg
 		{
 			var tcs = new TaskCompletionSource<bool>();
 
-			var operation  = SceneManager.LoadSceneAsync(_name, LoadSceneMode.Additive);
-			if (operation != null)
+			for (int i = 0; i < SceneManager.sceneCount; i++)
 			{
-				tcs.SetException(new System.Exception($"シーン '{_name}' が見つかりません"));
-			}
-			else
-			{
-				operation.completed += _ => tcs.SetResult(true);
+				var loadedScene = SceneManager.GetSceneAt(i);
+				if (loadedScene.name == _name)
+				{
+					tcs.SetResult(true);
+					return tcs.Task;
+				}
 			}
 
+			var operation  = SceneManager.LoadSceneAsync(_name, LoadSceneMode.Additive);
+			if (operation == null)
+			{
+				tcs.SetException(new System.Exception($"シーン '{_name}' が見つかりません"));
+				return tcs.Task;
+			}
+
+			operation.completed += _ => tcs.SetResult(true);
 			return tcs.Task;
 		}
 	}

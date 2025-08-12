@@ -18,6 +18,23 @@
 		}
 
 		/// <summary>
+		/// 永続シーンをロード
+		/// </summary>
+		public async void LoadPermanentSceneAsync()
+		{
+			if (_handle is not null) return; // 実行中
+
+			_handle = new HandleQueue();
+			foreach (var name in _config.Permanents)
+			{
+				_handle.Enqueue(new LoadSceneAsyncHandle(name));
+			}
+
+			await _handle?.RunAll();
+			_handle = null;
+		}
+
+		/// <summary>
 		/// バンドルされたシーンを一括ロード
 		/// </summary>
 		/// <param name="bundleName"></param>

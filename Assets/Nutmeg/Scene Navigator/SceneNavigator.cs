@@ -36,6 +36,7 @@ namespace Nutmeg
 
 		/// <summary>
 		/// 読み込み済みシーン一覧を更新
+		/// 永続シーンは除外
 		/// </summary>
 		public void RefreshLoadedScenes()
 		{

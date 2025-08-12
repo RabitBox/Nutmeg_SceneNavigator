@@ -20,12 +20,10 @@ namespace Nutmeg
 			if (operation == null)
 			{
 				tcs.SetResult(true);
+				return tcs.Task;
 			}
-			else
-			{
-				operation.completed += _ => tcs.SetResult(true);
-			}
-
+			
+			operation.completed += _ => tcs.SetResult(true);
 			return tcs.Task;
 		}
 	}
