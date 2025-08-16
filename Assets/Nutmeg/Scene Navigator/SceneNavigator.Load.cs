@@ -38,7 +38,7 @@
 		/// バンドルされたシーンを一括ロード
 		/// </summary>
 		/// <param name="bundleName"></param>
-		public async void LoadSceneBundle(string bundleName)
+		public async void LoadSceneBundleAsync(string bundleName)
 		{
 			if (_handle is not null) return; // 実行中
 

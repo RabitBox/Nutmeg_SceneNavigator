@@ -20,7 +20,7 @@
 		/// <summary>
 		/// 現在のシーンをすべてアンロードする
 		/// </summary>
-		public async void UnloadSceneAll()
+		public async void UnloadSceneAllAsync()
 		{
 			if (_handle is not null) return; // 実行中
 

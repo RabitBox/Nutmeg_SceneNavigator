@@ -6,7 +6,7 @@ namespace Nutmeg
 {
 	public partial class SceneNavigator : MonoBehaviour
 	{
-		public SceneNavigator Instance { get; private set; }
+		public static SceneNavigator Instance { get; private set; }
 
 		[Header("Assets")]
 		/// <summary>
