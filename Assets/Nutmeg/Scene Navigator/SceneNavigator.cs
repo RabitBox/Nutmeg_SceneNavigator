@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -77,7 +78,7 @@ namespace Nutmeg
 		/// <summary>
 		/// 未使用のアセットを開放する
 		/// </summary>
-		public async void RefreshAssetsAsync()
+		public async Task RefreshAssetsAsync()
 		{
 			if (_handle is not null) return; // 実行中
 
@@ -86,6 +87,17 @@ namespace Nutmeg
 
 			await _handle?.RunAll();
 			_handle = null;
+		}
+
+		/// <summary>
+		/// シーンの切り替えを行う
+		/// </summary>
+		public async void SwitchSceneAsync(string bundleName)
+		{
+			await UnloadSceneAllAsync();
+			await LoadSceneBundleAsync(bundleName);
+			await RefreshAssetsAsync();
+			RefreshLoadedScenes();
 		}
 	}
 }

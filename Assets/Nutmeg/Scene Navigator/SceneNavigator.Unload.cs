@@ -1,4 +1,6 @@
-﻿namespace Nutmeg
+﻿using System.Threading.Tasks;
+
+namespace Nutmeg
 {
 	public partial class SceneNavigator
 	{
@@ -6,7 +8,7 @@
 		/// 【非推奨】シーンをアンロードする
 		/// </summary>
 		/// <param name="sceneName"></param>
-		public async void UnloadSceneAsync(string sceneName)
+		public async Task UnloadSceneAsync(string sceneName)
 		{
 			if (_handle is not null) return; // 実行中
 
@@ -20,7 +22,7 @@
 		/// <summary>
 		/// 現在のシーンをすべてアンロードする
 		/// </summary>
-		public async void UnloadSceneAllAsync()
+		public async Task UnloadSceneAllAsync()
 		{
 			if (_handle is not null) return; // 実行中
 

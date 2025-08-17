@@ -1,4 +1,6 @@
-﻿namespace Nutmeg
+﻿using System.Threading.Tasks;
+
+namespace Nutmeg
 {
 	public partial class SceneNavigator
 	{
@@ -6,7 +8,7 @@
 		/// 【非推奨】シーンを読み込む
 		/// </summary>
 		/// <param name="sceneName"></param>
-		public async void LoadSceneAsync(string sceneName)
+		public async Task LoadSceneAsync(string sceneName)
 		{
 			if (_handle is not null) return; // 実行中
 
@@ -20,7 +22,7 @@
 		/// <summary>
 		/// 永続シーンをロード
 		/// </summary>
-		public async void LoadPermanentSceneAsync()
+		public async Task LoadPermanentSceneAsync()
 		{
 			if (_handle is not null) return; // 実行中
 
@@ -38,7 +40,7 @@
 		/// バンドルされたシーンを一括ロード
 		/// </summary>
 		/// <param name="bundleName"></param>
-		public async void LoadSceneBundleAsync(string bundleName)
+		public async Task LoadSceneBundleAsync(string bundleName)
 		{
 			if (_handle is not null) return; // 実行中
 
