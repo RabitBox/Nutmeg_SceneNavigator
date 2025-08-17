@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Nutmeg
@@ -15,6 +16,25 @@ namespace Nutmeg
 		public Task Run()
 		{
 			var tcs = new TaskCompletionSource<bool>();
+
+#if UNITY_EDITOR
+			bool exist = false;
+			for (int i = 0; i < SceneManager.sceneCount; i++)
+			{
+				var loadedScene = SceneManager.GetSceneAt(i);
+				if (loadedScene.name == _name)
+				{
+					exist = true;
+					break;
+				}
+			}
+			if (exist == false)
+			{
+				Debug.LogError($"{_name} はロードされていません");
+				tcs.SetResult(false);
+				return tcs.Task;
+			}
+#endif
 
 			var operation = SceneManager.UnloadSceneAsync(_name);
 			if (operation == null)
