@@ -6,28 +6,28 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/AppCore.unity
+    path: Assets/Sample/Scenes/AppCore.unity
     guid: db67674fa2518824ba6b5e56f9025bff
   - enabled: 1
-    path: Assets/Scenes/MainA.unity
+    path: Assets/Sample/Scenes/MainA.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/Scenes/MainB.unity
+    path: Assets/Sample/Scenes/MainB.unity
     guid: 7115938d6cfe8d749aa69e64e4310fbc
   - enabled: 1
-    path: Assets/Scenes/SubA.unity
+    path: Assets/Sample/Scenes/SubA.unity
     guid: cc8cf1ec864cdb5439ea521d5fda4d4e
   - enabled: 1
-    path: Assets/Scenes/SubB.unity
+    path: Assets/Sample/Scenes/SubB.unity
     guid: f2ced5bf471f8ce4b8502b7b18db1ab6
   - enabled: 1
-    path: Assets/Scenes/SubC.unity
+    path: Assets/Sample/Scenes/SubC.unity
     guid: fd56a7ba4b8ae4a4dae05d2a7cf04453
   - enabled: 1
-    path: Assets/Scenes/SubD.unity
+    path: Assets/Sample/Scenes/SubD.unity
     guid: 0e727bf90da059c4b9b51ed53412fd75
   - enabled: 1
-    path: Assets/Scenes/SubE.unity
+    path: Assets/Sample/Scenes/SubE.unity
     guid: bc70dc3280dc46249ac470b70a73aad5
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

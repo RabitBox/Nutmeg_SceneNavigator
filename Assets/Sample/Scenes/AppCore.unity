@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1befdca6f482044c85ca0b0f199e398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _config: {fileID: 11400000, guid: c7c39812340a45144820224ca78b9519, type: 2}
+  _config: {fileID: 11400000, guid: a1546335623581449be0804be2808612, type: 2}
   _scenes: []
 --- !u!4 &1070714562254943918
 Transform:
