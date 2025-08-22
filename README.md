@@ -13,3 +13,7 @@
 1. 適当なゲームオブジェクトに、`SceneNavigator.cs` をアタッチする。
 1. Config の欄に、先程作成したコンフィグデータを設定する。
 1. 適当な箇所から、`SceneNavigator.Instane.LoadSceneBundle("シーン名")`を実行する。
+
+# ライセンス
+- [Zlib](https://opensource.org/license/Zlib)
+
