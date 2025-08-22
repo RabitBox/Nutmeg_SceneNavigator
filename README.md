@@ -15,4 +15,5 @@
 1. 適当な箇所から、`SceneNavigator.Instane.LoadSceneBundle("シーン名")`を実行する。
 
 # ライセンス
-- [zlib](https://opensource.org/license/Zlib)
+- [Zlib](https://opensource.org/license/Zlib)
+
