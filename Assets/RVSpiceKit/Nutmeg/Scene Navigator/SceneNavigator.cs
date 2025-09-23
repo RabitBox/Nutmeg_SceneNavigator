@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Nutmeg
+namespace RVSpiceKit.Nutmeg
 {
 	public partial class SceneNavigator : MonoBehaviour
 	{

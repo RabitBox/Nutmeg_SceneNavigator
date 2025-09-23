@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Nutmeg
+namespace RVSpiceKit.Nutmeg
 {
 	/// <summary>
 	/// シーンの非同期アンロード

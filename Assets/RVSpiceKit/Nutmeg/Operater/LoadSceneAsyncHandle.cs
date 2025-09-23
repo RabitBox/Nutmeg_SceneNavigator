@@ -12,24 +12,44 @@
 //    If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
 // 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
-namespace Nutmeg
+namespace RVSpiceKit.Nutmeg
 {
-	public class HandleQueue
+	/// <summary>
+	/// シーンの非同期ロード
+	/// </summary>
+	public class LoadSceneAsyncHandle : IHandle
 	{
-		private readonly Queue<IHandle> _queue = new();
+		string _name;
 
-		public void Enqueue(IHandle handle) => _queue.Enqueue(handle);
+		public LoadSceneAsyncHandle(string name) => _name = name;
 
-		public async Task RunAll()
+		public Task Run()
 		{
-			while (_queue.Count > 0)
+			var tcs = new TaskCompletionSource<bool>();
+
+			for (int i = 0; i < SceneManager.sceneCount; i++)
 			{
-				var handle = _queue.Dequeue();
-				await handle.Run();
+				var loadedScene = SceneManager.GetSceneAt(i);
+				if (loadedScene.name == _name)
+				{
+					tcs.SetResult(true);
+					return tcs.Task;
+				}
 			}
+
+			var operation  = SceneManager.LoadSceneAsync(_name, LoadSceneMode.Additive);
+			if (operation == null)
+			{
+				tcs.SetException(new System.Exception($"シーン '{_name}' が見つかりません"));
+				return tcs.Task;
+			}
+
+			operation.completed += _ => tcs.SetResult(true);
+			return tcs.Task;
 		}
 	}
 }
+

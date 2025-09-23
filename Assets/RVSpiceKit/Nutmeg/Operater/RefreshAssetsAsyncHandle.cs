@@ -13,11 +13,24 @@
 // 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 using System.Threading.Tasks;
+using UnityEngine;
 
-namespace Nutmeg
+namespace RVSpiceKit.Nutmeg
 {
-	public interface IHandle
+	/// <summary>
+	/// 不使用アセットの開放
+	/// </summary>
+	public class RefreshAssetsAsyncHandle : IHandle
 	{
-		Task Run();
+		public Task Run()
+		{
+			var tcs = new TaskCompletionSource<bool>();
+
+			var operation = Resources.UnloadUnusedAssets();
+			operation.completed += _ => tcs.SetResult(true);
+
+			return tcs.Task;
+		}
 	}
 }
+

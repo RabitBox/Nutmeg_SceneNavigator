@@ -13,43 +13,41 @@
 // 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 using System.Threading.Tasks;
-using UnityEngine.SceneManagement;
 
-namespace Nutmeg
+namespace RVSpiceKit.Nutmeg
 {
-	/// <summary>
-	/// シーンの非同期ロード
-	/// </summary>
-	public class LoadSceneAsyncHandle : IHandle
+	public partial class SceneNavigator
 	{
-		string _name;
-
-		public LoadSceneAsyncHandle(string name) => _name = name;
-
-		public Task Run()
+		/// <summary>
+		/// 【非推奨】シーンをアンロードする
+		/// </summary>
+		/// <param name="sceneName"></param>
+		public async Task UnloadSceneAsync(string sceneName)
 		{
-			var tcs = new TaskCompletionSource<bool>();
+			if (_handle is not null) return; // 実行中
 
-			for (int i = 0; i < SceneManager.sceneCount; i++)
+			_handle = new HandleQueue();
+			_handle.Enqueue(new UnloadSceneAsyncHandle(sceneName));
+
+			await _handle?.RunAll();
+			_handle = null;
+		}
+
+		/// <summary>
+		/// 現在のシーンをすべてアンロードする
+		/// </summary>
+		public async Task UnloadSceneAllAsync()
+		{
+			if (_handle is not null) return; // 実行中
+
+			_handle = new HandleQueue();
+			foreach (var scene in _scenes)
 			{
-				var loadedScene = SceneManager.GetSceneAt(i);
-				if (loadedScene.name == _name)
-				{
-					tcs.SetResult(true);
-					return tcs.Task;
-				}
+				_handle.Enqueue(new UnloadSceneAsyncHandle(name));
 			}
 
-			var operation  = SceneManager.LoadSceneAsync(_name, LoadSceneMode.Additive);
-			if (operation == null)
-			{
-				tcs.SetException(new System.Exception($"シーン '{_name}' が見つかりません"));
-				return tcs.Task;
-			}
-
-			operation.completed += _ => tcs.SetResult(true);
-			return tcs.Task;
+			await _handle?.RunAll();
+			_handle = null;
 		}
 	}
 }
-
