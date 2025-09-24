@@ -15,7 +15,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace RVSpiceKit.Nutmeg
+namespace RV.SpiceKit.Nutmeg
 {
 	public class HandleQueue
 	{

@@ -14,7 +14,7 @@
 // 3. This notice may not be removed or altered from any source distribution.
 using System.Threading.Tasks;
 
-namespace RVSpiceKit.Nutmeg
+namespace RV.SpiceKit.Nutmeg
 {
 	public partial class SceneNavigator
 	{

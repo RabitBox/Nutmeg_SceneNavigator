@@ -15,7 +15,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RVSpiceKit.Nutmeg
+namespace RV.SpiceKit.Nutmeg
 {
 	[CreateAssetMenu(fileName = "SceneConfig", menuName = "Nutmeg/SceneConfigObject")]
 	public class SceneConfigObject : ScriptableObject

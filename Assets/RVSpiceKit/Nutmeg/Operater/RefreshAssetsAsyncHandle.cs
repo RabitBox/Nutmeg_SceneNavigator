@@ -15,7 +15,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace RVSpiceKit.Nutmeg
+namespace RV.SpiceKit.Nutmeg
 {
 	/// <summary>
 	/// 不使用アセットの開放
