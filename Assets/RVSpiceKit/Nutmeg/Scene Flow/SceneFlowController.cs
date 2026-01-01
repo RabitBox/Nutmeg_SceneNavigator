@@ -12,39 +12,27 @@
 //    If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
 // 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
+using UnityEngine;
 
-namespace RV.SpiceKit.Nutmeg.Messages
+namespace RV.SpiceKit.Nutmeg
 {
 	/// <summary>
-	/// 読み込み進捗
+	/// シーン読み込みの中継クラス
 	/// </summary>
-	public readonly struct LoadingProgressChanged
+	public class SceneFlowController : MonoBehaviour
 	{
-		public readonly float Progress;
-		public LoadingProgressChanged(float progress)
-		{
-			Progress = progress;
-		}
-	}
+		[SerializeField] private SceneConfigObject _config;
+		private SceneFlowUseCase _useCase;
 
-	/// <summary>
-	/// シーン読み込み状況
-	/// </summary>
-	public readonly struct LoadingPhaseChanged
-	{
-		public enum Phase
+		public void Awake()
 		{
-			Unloading,
-			Cleaning,
-			Loading,
-			Complate
+			_useCase = new SceneFlowUseCase(_config, new LoadingController());
 		}
 
-		public readonly Phase Current;
+		public async void InitializeAsync()
+			=> await _useCase.InitializeAsync();
 
-		public LoadingPhaseChanged(Phase current)
-		{
-			Current = current;
-		}
+		public async void LoadSceneBundleAsync(string bundleName)
+			=> await _useCase.LoadBundleAsync(bundleName);
 	}
 }

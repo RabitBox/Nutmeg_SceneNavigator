@@ -12,39 +12,35 @@
 //    If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
 // 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
+using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace RV.SpiceKit.Nutmeg.Messages
+namespace RV.SpiceKit.Nutmeg
 {
-	/// <summary>
-	/// 読み込み進捗
-	/// </summary>
-	public readonly struct LoadingProgressChanged
+	public class LoadingController
 	{
-		public readonly float Progress;
-		public LoadingProgressChanged(float progress)
+		public async UniTask RunAsync(IReadOnlyList<ILoadingTask> tasks)
 		{
-			Progress = progress;
-		}
-	}
+			// 全タスクを実行
+			var runners = tasks.Select(task => task.RunAsync()).ToArray();
 
-	/// <summary>
-	/// シーン読み込み状況
-	/// </summary>
-	public readonly struct LoadingPhaseChanged
-	{
-		public enum Phase
-		{
-			Unloading,
-			Cleaning,
-			Loading,
-			Complate
-		}
+			// タスクを監視
+			while (!runners.All(task => task.Status == UniTaskStatus.Succeeded))
+			{
+				// 全体の進行の平均を通知
+				//float progress = tasks.Count > 0 ? tasks.Average(t => t.Progress) : 1f;
+				//MessageBroker<LoadingProgressChanged>.Default.Publish(new LoadingProgressChanged(progress));
 
-		public readonly Phase Current;
+				// 待機
+				await UniTask.Yield();
+			}
 
-		public LoadingPhaseChanged(Phase current)
-		{
-			Current = current;
+			// 全タスク完了をチェック
+			await UniTask.WhenAll( runners );
+
+			// 完了を通知
+			//MessageBroker<LoadingProgressChanged>.Default.Publish(new LoadingProgressChanged(1f));
 		}
 	}
 }

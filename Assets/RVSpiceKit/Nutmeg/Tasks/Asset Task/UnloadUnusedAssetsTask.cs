@@ -12,39 +12,25 @@
 //    If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
 // 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
+using Cysharp.Threading.Tasks;
+using UnityEngine;
 
-namespace RV.SpiceKit.Nutmeg.Messages
+namespace RV.SpiceKit.Nutmeg
 {
 	/// <summary>
-	/// 読み込み進捗
+	/// [Task] 不使用アセットのアンロード
 	/// </summary>
-	public readonly struct LoadingProgressChanged
+	public class UnloadUnusedAssetsTask : ILoadingTask
 	{
-		public readonly float Progress;
-		public LoadingProgressChanged(float progress)
-		{
-			Progress = progress;
-		}
-	}
+		private AsyncOperation _operation;
 
-	/// <summary>
-	/// シーン読み込み状況
-	/// </summary>
-	public readonly struct LoadingPhaseChanged
-	{
-		public enum Phase
-		{
-			Unloading,
-			Cleaning,
-			Loading,
-			Complate
-		}
+		public float Progress => _operation?.progress ?? 0f;
 
-		public readonly Phase Current;
-
-		public LoadingPhaseChanged(Phase current)
+		public async UniTask RunAsync()
 		{
-			Current = current;
+			_operation = Resources.UnloadUnusedAssets();
+			await _operation.ToUniTask();
 		}
 	}
 }
+

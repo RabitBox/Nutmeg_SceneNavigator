@@ -143,13 +143,27 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1070714562254943918}
+  - component: {fileID: 5591691550045981819}
   m_Layer: 0
-  m_Name: Scene Navigator
+  m_Name: Scene FLow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &5591691550045981819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5591691550045981818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bf264bf51a861a419a8bda317a9008a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RV.SpiceKit.Nutmeg.SceneFlowController
+  _config: {fileID: 11400000, guid: a1546335623581449be0804be2808612, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
