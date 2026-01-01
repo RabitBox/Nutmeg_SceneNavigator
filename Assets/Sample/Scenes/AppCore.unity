@@ -119,20 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &805125667358790217
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5591691550045981818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1befdca6f482044c85ca0b0f199e398, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _config: {fileID: 11400000, guid: a1546335623581449be0804be2808612, type: 2}
-  _scenes: []
 --- !u!4 &1070714562254943918
 Transform:
   m_ObjectHideFlags: 0
@@ -157,7 +143,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1070714562254943918}
-  - component: {fileID: 805125667358790217}
   m_Layer: 0
   m_Name: Scene Navigator
   m_TagString: Untagged
