@@ -30,6 +30,7 @@ namespace RV.SpiceKit.Nutmeg
 		private readonly LoadingController _loading;
 		private string _currentBundleName = null;
 		private IReadOnlyList<string> _currentScenes = Array.Empty<string>();
+		private bool _isLoading = false;
 
 		public SceneFlowUseCase(SceneConfigObject config, LoadingController loading)
 		{
@@ -61,6 +62,10 @@ namespace RV.SpiceKit.Nutmeg
 		/// <returns></returns>
 		public async UniTask LoadBundleAsync(string bundleName)
 		{
+			if (_isLoading) {
+				return;
+			}
+
 			// バンドル取得
 			var bundle = _config.SceneBundles
 				.First(b => b.Name == bundleName);
@@ -69,6 +74,8 @@ namespace RV.SpiceKit.Nutmeg
 			if (_currentBundleName == bundle.Name) {
 				return;
 			}
+
+			_isLoading = true;
 
 			// 1. シーンのアンロード
 			Publish(LoadingPhaseChanged.Phase.Unloading);
@@ -99,6 +106,8 @@ namespace RV.SpiceKit.Nutmeg
 			_currentBundleName = bundle.Name;
 			_currentScenes = bundle.SceneNames;
 			Publish(LoadingPhaseChanged.Phase.Complate);
+
+			_isLoading = false;
 		}
 
 		/// <summary>
