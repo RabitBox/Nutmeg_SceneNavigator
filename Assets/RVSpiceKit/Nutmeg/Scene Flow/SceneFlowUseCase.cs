@@ -28,6 +28,7 @@ namespace RV.SpiceKit.Nutmeg
 	{
 		private readonly SceneConfigObject _config;
 		private readonly LoadingController _loading;
+		private string _currentBundleName = null;
 		private IReadOnlyList<string> _currentScenes = Array.Empty<string>();
 
 		public SceneFlowUseCase(SceneConfigObject config, LoadingController loading)
@@ -64,10 +65,15 @@ namespace RV.SpiceKit.Nutmeg
 			var bundle = _config.SceneBundles
 				.First(b => b.Name == bundleName);
 
+			// 0. 読み込み済バンドルチェック
+			if (_currentBundleName == bundle.Name) {
+				return;
+			}
+
 			// 1. シーンのアンロード
 			Publish(LoadingPhaseChanged.Phase.Unloading);
 			var unloadTasks = _currentScenes
-			   //.Except(_config.Permanents)
+			   .Except(_config.Permanents)
 			   .Select(s => new SceneUnloadTask(s))
 			   .Cast<ILoadingTask>()
 			   .ToList();
@@ -90,6 +96,7 @@ namespace RV.SpiceKit.Nutmeg
 			await _loading.RunAsync(loadTasks);
 
 			// 現在のシーンリストを更新
+			_currentBundleName = bundle.Name;
 			_currentScenes = bundle.SceneNames;
 			Publish(LoadingPhaseChanged.Phase.Complate);
 		}

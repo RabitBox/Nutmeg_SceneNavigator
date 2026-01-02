@@ -20,7 +20,7 @@ namespace RV.SpiceKit.Nutmeg
 	/// <summary>
 	/// [Task] シーンのアンロード
 	/// </summary>
-	public class SceneUnloadTask
+	public class SceneUnloadTask : ILoadingTask
 	{
 		private readonly string _sceneName;
 

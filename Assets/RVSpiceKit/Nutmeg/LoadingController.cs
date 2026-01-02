@@ -25,12 +25,11 @@ namespace RV.SpiceKit.Nutmeg
 			// 全タスクを実行
 			var runners = tasks.Select(task => task.RunAsync()).ToArray();
 
-			// タスクを監視
-			while (!runners.All(task => task.Status == UniTaskStatus.Succeeded))
+			// タスク進捗を監視
+			while (!runners.All(task => task.Status.IsCompleted()))
 			{
 				// 全体の進行の平均を通知
 				//float progress = tasks.Count > 0 ? tasks.Average(t => t.Progress) : 1f;
-				//MessageBroker<LoadingProgressChanged>.Default.Publish(new LoadingProgressChanged(progress));
 
 				// 待機
 				await UniTask.Yield();
@@ -38,9 +37,6 @@ namespace RV.SpiceKit.Nutmeg
 
 			// 全タスク完了をチェック
 			await UniTask.WhenAll( runners );
-
-			// 完了を通知
-			//MessageBroker<LoadingProgressChanged>.Default.Publish(new LoadingProgressChanged(1f));
 		}
 	}
 }
