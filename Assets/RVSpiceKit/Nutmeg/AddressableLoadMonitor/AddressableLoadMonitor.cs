@@ -177,5 +177,31 @@ namespace RV.SpiceKit.Nutmeg
 			if (tasks.Count > 0)
 				await UniTask.WhenAll(tasks);
 		}
+
+		/// <summary>
+		/// ローディングの完了状況を調べる
+		/// </summary>
+		/// <param name="tags"></param>
+		/// <returns>0~1のfloat値</returns>
+		public float GetProgress(TTag tags)
+		{
+			// タグチェック
+			if (!_entries.TryGetValue(tags, out var dict))
+				return 1.0f;
+
+			int total = dict.Count;
+			if (total == 0)
+				return 1.0f;
+
+			int completed = 0;
+
+			foreach (var handle in dict.Values)
+			{
+				if (handle.IsDone)
+					completed++;
+			}
+
+			return (float)completed / total;
+		}
 	}
 }
