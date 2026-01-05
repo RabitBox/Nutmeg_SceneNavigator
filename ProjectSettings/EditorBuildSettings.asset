@@ -30,5 +30,6 @@ EditorBuildSettings:
     path: Assets/Sample/Scenes/SubE.unity
     guid: bc70dc3280dc46249ac470b70a73aad5
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 003ff3f473541f549a7a8a94cda62462, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
