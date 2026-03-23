@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace RV.SpiceKit.Nutmeg.SO
+namespace SpiceKit.Nutmeg.SO
 {
 	[CreateAssetMenu(fileName = "ContextSceneList", menuName = "Nutmeg/Scriptable Objects/ContextSceneList")]
 	public class ContextSceneList : ScriptableObject

@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-namespace RV.SpiceKit.Nutmeg.SO
+namespace SpiceKit.Nutmeg.SO
 {
 	[CreateAssetMenu(fileName = "LayerSceneList", menuName = "Nutmeg/Scriptable Objects/LayerSceneList")]
 	public class LayerSceneList : ScriptableObject
