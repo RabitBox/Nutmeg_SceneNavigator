@@ -21,9 +21,9 @@ using SpiceKit.Nutmeg.Messages;
 
 namespace SpiceKit.Nutmeg
 {
-	public class SceneLoadQueue
+	public partial class SceneLoadQueue
 	{
-		private readonly Queue<SceneCommand> _queue = new();
+		private readonly Queue<Command> _queue = new();
 		private bool _isProcessing = false;
 
 		/// <summary>
@@ -32,7 +32,7 @@ namespace SpiceKit.Nutmeg
 		/// <param name="sceneName">シーン名</param>
 		/// <param name="autoProcess">自動実行フラグ</param>
 		public void Load(string sceneName, bool autoProcess = true)
-			=> Enqueue(new SceneCommand(SceneCommandType.Load, sceneName), autoProcess);
+			=> Enqueue(new Command(CommandType.Load, sceneName), autoProcess);
 
 		/// <summary>
 		/// アンロードするシーンの指定
@@ -40,7 +40,7 @@ namespace SpiceKit.Nutmeg
 		/// <param name="sceneName">シーン名</param>
 		/// <param name="autoProcess">自動実行フラグ</param>
 		public void Unload(string sceneName, bool autoProcess = true)
-			=> Enqueue(new SceneCommand(SceneCommandType.Unload, sceneName), autoProcess);
+			=> Enqueue(new Command(CommandType.Unload, sceneName), autoProcess);
 
 		/// <summary>
 		/// スタックしたコマンドの実行
@@ -59,7 +59,7 @@ namespace SpiceKit.Nutmeg
 		/// </summary>
 		/// <param name="command">実行コマンド</param>
 		/// <param name="autoProcess">自動実行フラグ</param>
-		private void Enqueue(SceneCommand command, bool autoProcess = true)
+		private void Enqueue(Command command, bool autoProcess = true)
 		{
 			_queue.Enqueue(command);
 
@@ -86,12 +86,12 @@ namespace SpiceKit.Nutmeg
 
 				switch (command.Type)
 				{
-					case SceneCommandType.Load:
+					case CommandType.Load:
 						PublishMessage(SceneQueueEvent.ProcessType.Load);
 						await LoadAsync( command.SceneName );
 						break;
 
-					case SceneCommandType.Unload:
+					case CommandType.Unload:
 						PublishMessage(SceneQueueEvent.ProcessType.Unload);
 						await UnloadAsync( command.SceneName );
 						needsRefresh = true;
@@ -138,23 +138,5 @@ namespace SpiceKit.Nutmeg
 		/// <param name="type"></param>
 		private void PublishMessage(SceneQueueEvent.ProcessType type)
 			=> MessageBroker<SceneQueueEvent>.Default.Publish(new SceneQueueEvent(type));
-	}
-
-	public enum SceneCommandType
-	{
-		Load,
-		Unload
-	}
-
-	public struct SceneCommand
-	{
-		public SceneCommandType Type { get; }
-		public string SceneName { get; }
-
-		public SceneCommand( SceneCommandType type, string sceneName )
-		{
-			Type = type;
-			SceneName = sceneName;
-		}
 	}
 }
