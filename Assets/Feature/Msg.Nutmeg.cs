@@ -12,23 +12,25 @@
 //    If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
 // 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
-using System.Collections.Generic;
-using UnityEngine;
 
-namespace SpiceKit.Nutmeg.SO
+namespace SpiceKit.Nutmeg.Messages
 {
-	[CreateAssetMenu(fileName = "ContextSceneList", menuName = "Nutmeg/Scriptable Objects/ContextSceneList")]
-	public class ContextSceneList : ScriptableObject
+	public readonly struct SceneQueueEvent
 	{
-		[System.Serializable]
-		public struct ContextPair
+		public enum ProcessType
 		{
-			public string Name;
-			public string Value;
+			Started,	// プロセス開始
+			Load,		// ロード中
+			Unload,		// アンロード中
+			Complated,  // プロセス終了
+			Refresh,	// 不使用アセット解放中
 		}
 
-		[field: SerializeField]
-		public List<ContextPair> SceneList { get; private set; }
+		public ProcessType Type {  get; }
+
+		public SceneQueueEvent( ProcessType type )
+		{
+			Type = type;
+		}
 	}
 }
-
