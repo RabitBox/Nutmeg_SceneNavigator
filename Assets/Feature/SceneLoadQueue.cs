@@ -26,21 +26,44 @@ namespace SpiceKit.Nutmeg
 		private readonly Queue<SceneCommand> _queue = new();
 		private bool _isProcessing = false;
 
-		public void Load(string sceneName)
-			=> Enqueue(new SceneCommand(SceneCommandType.Load, sceneName));
+		/// <summary>
+		/// ロードするシーンの指定
+		/// </summary>
+		/// <param name="sceneName">シーン名</param>
+		/// <param name="autoProcess">自動実行フラグ</param>
+		public void Load(string sceneName, bool autoProcess = true)
+			=> Enqueue(new SceneCommand(SceneCommandType.Load, sceneName), autoProcess);
 
-		public void Unload(string sceneName)
-			=> Enqueue(new SceneCommand(SceneCommandType.Unload, sceneName));
+		/// <summary>
+		/// アンロードするシーンの指定
+		/// </summary>
+		/// <param name="sceneName">シーン名</param>
+		/// <param name="autoProcess">自動実行フラグ</param>
+		public void Unload(string sceneName, bool autoProcess = true)
+			=> Enqueue(new SceneCommand(SceneCommandType.Unload, sceneName), autoProcess);
+
+		/// <summary>
+		/// スタックしたコマンドの実行
+		/// 自動実行フラグを切った場合に使用
+		/// </summary>
+		public void Process()
+		{
+			if (!_isProcessing && _queue.Count > 0)
+			{
+				ProcessQueueAsync().Forget();
+			}
+		}
 
 		/// <summary>
 		/// ロード / アンロード コマンドのスタック
 		/// </summary>
-		/// <param name="command"></param>
-		private void Enqueue(SceneCommand command)
+		/// <param name="command">実行コマンド</param>
+		/// <param name="autoProcess">自動実行フラグ</param>
+		private void Enqueue(SceneCommand command, bool autoProcess = true)
 		{
 			_queue.Enqueue(command);
 
-			if (!_isProcessing)
+			if (autoProcess && !_isProcessing)
 			{
 				ProcessQueueAsync().Forget();
 			}
