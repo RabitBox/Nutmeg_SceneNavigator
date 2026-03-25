@@ -21,7 +21,7 @@ using SpiceKit.Nutmeg.Messages;
 
 namespace SpiceKit.Nutmeg
 {
-	public partial class SceneLoadQueue
+	public partial class SceneLoadQueue : ISceneLoadQueue
 	{
 		private readonly Queue<Command> _queue = new();
 		private bool _isProcessing = false;
