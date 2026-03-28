@@ -12,36 +12,25 @@
 //    If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
 // 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
-using UnityEngine;
-using SpiceKit.Nutmeg;
-using SpiceKit.Nutmeg.Data;
-using SpiceKit.Nutmeg.Messages;
 
-/// <summary>
-/// シーン読み込みの中継クラス
-/// </summary>
-public class SceneFlowController : MonoBehaviour
+namespace SpiceKit.Nutmeg.Messages
 {
-	[SerializeField]
-	private ContextSceneList _context;
-
-	private int _prev;
-
-
-	public void Awake()
+	public readonly struct SceneQueueEvent
 	{
-		_prev = 0;
-		SceneService.Load(_context.Default);
-	}
+		public enum ProcessType
+		{
+			Started,	// プロセス開始
+			Load,		// ロード中
+			Unload,		// アンロード中
+			Complated,  // プロセス終了
+			Refresh,	// 不使用アセット解放中
+		}
 
-	public void Load(int id)
-	{
-		Debug.Log($"Load to {id}");
-		if (_context.SceneList.Count <= id) return;
-		if (_prev == id) return;
-		SceneService.Unload(_context.SceneList[_prev].Value, false);
-		SceneService.Load(_context.SceneList[id].Value);
+		public ProcessType Type {  get; }
 
-		_prev = id;
+		public SceneQueueEvent( ProcessType type )
+		{
+			Type = type;
+		}
 	}
 }

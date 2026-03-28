@@ -12,36 +12,15 @@
 //    If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
 // 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
+using System.Collections.Generic;
 using UnityEngine;
-using SpiceKit.Nutmeg;
-using SpiceKit.Nutmeg.Data;
-using SpiceKit.Nutmeg.Messages;
 
-/// <summary>
-/// シーン読み込みの中継クラス
-/// </summary>
-public class SceneFlowController : MonoBehaviour
+namespace SpiceKit.Nutmeg.Data
 {
-	[SerializeField]
-	private ContextSceneList _context;
-
-	private int _prev;
-
-
-	public void Awake()
+	[CreateAssetMenu(fileName = "LayerSceneList", menuName = "Nutmeg/Scriptable Objects/LayerSceneList")]
+	public class LayerSceneList : ScriptableObject
 	{
-		_prev = 0;
-		SceneService.Load(_context.Default);
-	}
-
-	public void Load(int id)
-	{
-		Debug.Log($"Load to {id}");
-		if (_context.SceneList.Count <= id) return;
-		if (_prev == id) return;
-		SceneService.Unload(_context.SceneList[_prev].Value, false);
-		SceneService.Load(_context.SceneList[id].Value);
-
-		_prev = id;
+		[field : SerializeField]
+		public List<string> SceneList { get; private set; }
 	}
 }
