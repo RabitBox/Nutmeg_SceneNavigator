@@ -15,7 +15,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SpiceKit.Nutmeg.SO
+namespace SpiceKit.Nutmeg.Data
 {
 	[CreateAssetMenu(fileName = "ContextSceneList", menuName = "Nutmeg/Scriptable Objects/ContextSceneList")]
 	public class ContextSceneList : ScriptableObject
@@ -29,6 +29,8 @@ namespace SpiceKit.Nutmeg.SO
 
 		[field: SerializeField]
 		public List<ContextPair> SceneList { get; private set; }
+
+		public string Default => (SceneList.Count > 0) ? SceneList[0].Value : "";
 	}
 }
 

@@ -15,7 +15,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SpiceKit.Nutmeg.SO
+namespace SpiceKit.Nutmeg.Data
 {
 	[CreateAssetMenu(fileName = "LayerSceneList", menuName = "Nutmeg/Scriptable Objects/LayerSceneList")]
 	public class LayerSceneList : ScriptableObject

@@ -36,14 +36,14 @@ namespace SpiceKit.Nutmeg
 		/// 指定したシーンをロードする
 		/// </summary>
 		/// <param name="sceneName"></param>
-		public static void Load(string sceneName)
-			=> Instance.Load( sceneName );
+		public static void Load(string sceneName, bool autoProcess = true)
+			=> Instance.Load( sceneName, autoProcess );
 
 		/// <summary>
 		/// 複数のシーンをまとめてロードする
 		/// </summary>
 		/// <param name="sceneList"></param>
-		public static void LoadBatch(SO.LayerSceneList sceneList)
+		public static void LoadBatch(Data.LayerSceneList sceneList)
 		{
 			foreach (var sceneName in sceneList.SceneList)
 			{
@@ -56,14 +56,14 @@ namespace SpiceKit.Nutmeg
 		/// 指定したシーンをアンロードする
 		/// </summary>
 		/// <param name="sceneName"></param>
-		public static void Unload(string sceneName)
-			=> Instance.Unload(sceneName);
+		public static void Unload(string sceneName, bool autoProcess = true)
+			=> Instance.Unload( sceneName, autoProcess );
 
 		/// <summary>
 		/// 複数のシーンをまとめてアンロードする
 		/// </summary>
 		/// <param name="sceneList"></param>
-		public static void UnloadBatch(SO.LayerSceneList sceneList)
+		public static void UnloadBatch(Data.LayerSceneList sceneList)
 		{
 			foreach (var sceneName in sceneList.SceneList)
 			{
@@ -71,5 +71,7 @@ namespace SpiceKit.Nutmeg
 			}
 			Instance.Process();
 		}
+
+		public static bool IsProcessing => Instance.IsProcessing;
 	}
 }

@@ -43,6 +43,11 @@ namespace SpiceKit.Nutmeg
 			=> Enqueue(new Command(CommandType.Unload, sceneName), autoProcess);
 
 		/// <summary>
+		/// 動作中チェック
+		/// </summary>
+		public bool IsProcessing => _isProcessing;
+
+		/// <summary>
 		/// スタックしたコマンドの実行
 		/// 自動実行フラグを切った場合に使用
 		/// </summary>
@@ -59,7 +64,7 @@ namespace SpiceKit.Nutmeg
 		/// </summary>
 		/// <param name="command">実行コマンド</param>
 		/// <param name="autoProcess">自動実行フラグ</param>
-		private void Enqueue(Command command, bool autoProcess = true)
+		private void Enqueue(Command command, bool autoProcess)
 		{
 			_queue.Enqueue(command);
 

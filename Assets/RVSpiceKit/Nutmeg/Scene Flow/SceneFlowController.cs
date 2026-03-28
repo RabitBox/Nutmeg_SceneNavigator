@@ -13,26 +13,35 @@
 // 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 using UnityEngine;
+using SpiceKit.Nutmeg;
+using SpiceKit.Nutmeg.Data;
+using SpiceKit.Nutmeg.Messages;
 
-namespace RV.SpiceKit.Nutmeg
+/// <summary>
+/// シーン読み込みの中継クラス
+/// </summary>
+public class SceneFlowController : MonoBehaviour
 {
-	/// <summary>
-	/// シーン読み込みの中継クラス
-	/// </summary>
-	public class SceneFlowController : MonoBehaviour
+	[SerializeField]
+	private ContextSceneList _context;
+
+	private int _prev;
+
+
+	public void Awake()
 	{
-		[SerializeField] private SceneConfigObject _config;
-		private SceneFlowUseCase _useCase;
+		_prev = 0;
+		SceneService.Load(_context.Default);
+	}
 
-		public void Awake()
-		{
-			_useCase = new SceneFlowUseCase(_config, new LoadingController());
-		}
+	public void Load(int id)
+	{
+		Debug.Log($"Load to {id}");
+		if (_context.SceneList.Count <= id) return;
+		if (_prev == id) return;
+		SceneService.Unload(_context.SceneList[_prev].Value, false);
+		SceneService.Load(_context.SceneList[id].Value);
 
-		public async void InitializeAsync()
-			=> await _useCase.InitializeAsync();
-
-		public async void LoadSceneBundleAsync(string bundleName)
-			=> await _useCase.LoadBundleAsync(bundleName);
+		_prev = id;
 	}
 }

@@ -20,5 +20,6 @@ namespace SpiceKit.Nutmeg
 		public void Load(string sceneName, bool autoProcess = true);
 		public void Unload(string sceneName, bool autoProcess = true);
 		public void Process();
+		public bool IsProcessing { get; }
 	}
 }
