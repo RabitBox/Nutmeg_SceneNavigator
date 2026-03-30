@@ -37,11 +37,24 @@ public class SceneFlowController : MonoBehaviour
 	public void Load(int id)
 	{
 		Debug.Log($"Load to {id}");
-		if (_context.SceneList.Count <= id) return;
 		if (_prev == id) return;
-		SceneService.Unload(_context.SceneList[_prev].Value, false);
-		SceneService.Load(_context.SceneList[id].Value);
+		if (_context.TryGetSceneName(GetName(id), out string loadName))
+		{
+			if (_context.TryGetSceneName(GetName(_prev), out string unloadName)) SceneService.Unload(unloadName, false);
+			SceneService.Load(loadName);
+			_prev = id;
+		}
+	}
 
-		_prev = id;
+	private string GetName(int id)
+	{
+		switch (id)
+		{
+			case 0: 
+				return "A";
+			case 1: 
+				return "B";
+		}
+		return "";
 	}
 }

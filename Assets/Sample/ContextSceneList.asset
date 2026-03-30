@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08db459355fbfa44bbf10464654374df, type: 3}
   m_Name: ContextSceneList
   m_EditorClassIdentifier: Assembly-CSharp::RV.SpiceKit.Nutmeg.SO.ContextSceneList
-  <SceneList>k__BackingField:
+  _sceneList:
   - Name: A
     Value: MainA
   - Name: B

@@ -13,6 +13,7 @@
 // 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace SpiceKit.Nutmeg.Data
@@ -27,10 +28,17 @@ namespace SpiceKit.Nutmeg.Data
 			public string Value;
 		}
 
-		[field: SerializeField]
-		public List<ContextPair> SceneList { get; private set; }
+		[SerializeField] public List<ContextPair> _sceneList;
+		public Dictionary<string, string> SceneMap { get; private set; }
 
-		public string Default => (SceneList.Count > 0) ? SceneList[0].Value : "";
+		public bool TryGetSceneName(string key, out string name) => SceneMap.TryGetValue(key, out name);
+
+		public string Default => (_sceneList.Count > 0) ? _sceneList[0].Value : "";
+
+		public void OnEnable()
+		{
+			SceneMap = _sceneList.ToDictionary(x => x.Name, x => x.Value);
+		}
 	}
 }
 
