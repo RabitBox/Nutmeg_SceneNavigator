@@ -15,7 +15,7 @@
 
 namespace SpiceKit.Nutmeg
 {
-	public class SceneService
+	public partial class SceneService
 	{
 		/// <summary>
 		/// シーンロード処理を管理する内部インスタンス
@@ -37,7 +37,10 @@ namespace SpiceKit.Nutmeg
 		/// </summary>
 		/// <param name="sceneName"></param>
 		public static void Load(string sceneName, bool autoProcess = true)
-			=> Instance.Load( sceneName, autoProcess );
+		{
+			if (AlreadyLoadedScene(sceneName)) return;
+			Instance.Load( sceneName, autoProcess );
+		}
 
 		/// <summary>
 		/// 複数のシーンをまとめてロードする
@@ -47,6 +50,7 @@ namespace SpiceKit.Nutmeg
 		{
 			foreach (var sceneName in sceneList.SceneList)
 			{
+				if (AlreadyLoadedScene(sceneName)) continue;
 				Instance.Load(sceneName, false);
 			}
 			Instance.Process();
@@ -57,7 +61,10 @@ namespace SpiceKit.Nutmeg
 		/// </summary>
 		/// <param name="sceneName"></param>
 		public static void Unload(string sceneName, bool autoProcess = true)
-			=> Instance.Unload( sceneName, autoProcess );
+		{
+			if (!AlreadyLoadedScene(sceneName)) return;
+			Instance.Unload( sceneName, autoProcess );
+		}
 
 		/// <summary>
 		/// 複数のシーンをまとめてアンロードする
@@ -67,6 +74,7 @@ namespace SpiceKit.Nutmeg
 		{
 			foreach (var sceneName in sceneList.SceneList)
 			{
+				if (!AlreadyLoadedScene(sceneName)) continue;
 				Instance.Unload(sceneName, false);
 			}
 			Instance.Process();
