@@ -28,7 +28,7 @@ namespace SpiceKit.Nutmeg.Data
 			public string Value;
 		}
 
-		[SerializeField] public List<ContextPair> _sceneList;
+		[SerializeField] private List<ContextPair> _sceneList;
 		public Dictionary<string, string> SceneMap { get; private set; }
 
 		public bool TryGetSceneName(string key, out string name) => SceneMap.TryGetValue(key, out name);
